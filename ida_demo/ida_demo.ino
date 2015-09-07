@@ -1,3 +1,4 @@
+#include <SHT1x.h>
 #include<SoftwareSerial.h>
 
 char inputString[128] = "";         // a char array to hold incoming data
