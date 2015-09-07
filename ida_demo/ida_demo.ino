@@ -1,7 +1,7 @@
 #include<SoftwareSerial.h>
 
 char inputString[128] = "";         // a char array to hold incoming data
-boolean stringComplete = false;
+//boolean stringComplete = false;
 SoftwareSerial mySerial(9,8);
 
 void setup() {
@@ -20,9 +20,9 @@ void loop() {
   char wSpeed[6] = "";
   char wAngle[6] = "";
   char wTemp[6]  = "";
-  String windSpeed = "";
-  String windAngle = "";
-  String windTemp = "";
+  //String windSpeed = "";
+  //String windAngle = "";
+  //String windTemp = "";
   
   while(!mySerial.available()){
     //loop until mySerial is available
@@ -70,9 +70,9 @@ void loop() {
     Serial.println("Token not found");
   }
   
-  //String windSpeed(wSpeed);
-  //String windAngle(wAngle);
-  //String windTemp(wTemp);
+  String windSpeed(wSpeed);
+  String windAngle(wAngle);
+  String windTemp(wTemp);
 
 //convert char array to string        
   for(uint8_t num1=0; num1<sizeof(wSpeed); num1++){
