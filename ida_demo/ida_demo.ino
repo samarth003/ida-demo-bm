@@ -1,9 +1,12 @@
-#include <SHT1x.h>
+#include <Sensirion.h>
 #include<SoftwareSerial.h>
 
 char inputString[128] = "";         // a char array to hold incoming data
-//boolean stringComplete = false;
+const uint8_t sht_dataPin  =  10;
+const uint8_t sht_clockPin =  11;
+
 SoftwareSerial mySerial(9,8);
+Sensirion tempSensor = Sensirion(sht_dataPin, sht_clockPin);
 
 void setup() {
   Serial.begin(57600); 
@@ -23,7 +26,12 @@ void loop() {
   float wData;
   float wAngleData;
   float wTempData;
-
+  
+  //variables for temp-RH sensor
+  float temperature;
+  float humidity;
+  float dewpoint;
+  
   //variables for SP 2015
   int solar_sens_Value;
   float solar_val;
@@ -88,14 +96,22 @@ void loop() {
   
   memset(inputString,0,sizeof(inputString)); //clear the character array
   mySerial.flush();
-  Serial.flush();
+  //Serial.flush();
 
   //Solar radiation SP 2015 data extraction     
   solar_sens_Value = analogRead(A1);
   solar_val = solar_sens_Value * 0.25;
   Serial.print(";solar rad:");
-  Serial.println(solar_val);
-        
+  Serial.print(solar_val);
+
+  //sht7x data extraction
+  tempSensor.measure(&temperature, &humidity, &dewpoint);
+  Serial.print(";Temp:");
+  Serial.print(temperature);
+  Serial.print("C; Humidity:");
+  Serial.print(humidity); Serial.println("%");
+  delay(1000);
+  Serial.flush();      
 }
 
 
