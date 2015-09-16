@@ -2,8 +2,8 @@
 #include<SoftwareSerial.h>
 
 char inputString[128] = "";         // a char array to hold incoming data
-const uint8_t sht_dataPin  =  10;
-const uint8_t sht_clockPin =  11;
+const uint8_t sht_dataPin  =  5;//10;
+const uint8_t sht_clockPin =  6;//11;
 
 SoftwareSerial mySerial(9,8);
 Sensirion tempSensor = Sensirion(sht_dataPin, sht_clockPin);
@@ -27,15 +27,15 @@ void loop() {
   float wAngleData;
   float wTempData;
   
+  //variables for SP 2015
+  int solar_sens_Value;
+  float solar_val;
+
   //variables for temp-RH sensor
   float temperature;
   float humidity;
   float dewpoint;
-  
-  //variables for SP 2015
-  int solar_sens_Value;
-  float solar_val;
-  
+
   while(!mySerial.available()){
     //loop until mySerial is available
   }
@@ -63,7 +63,7 @@ void loop() {
   //Serial.println(*(pString+1));
   
   if((pString != NULL) && (pTemp != NULL)){
-    //Serial.println("testing here.."); //with SP 2015, it does not enter this loop.FAIL!!
+   // Serial.println("testing here.."); //with sht75, it does not enter this loop.FAIL!!
     for(wCount=0; wCount<6; wCount++){
       wSpeed[wCount] = inputString[(int)(pString-inputString+((char)15))+wCount];
       //wSpeed[wCount] = pString[15 + wCount]; 
@@ -97,7 +97,7 @@ void loop() {
   memset(inputString,0,sizeof(inputString)); //clear the character array
   mySerial.flush();
   //Serial.flush();
-
+  
   //Solar radiation SP 2015 data extraction     
   solar_sens_Value = analogRead(A1);
   solar_val = solar_sens_Value * 0.25;
@@ -105,12 +105,13 @@ void loop() {
   Serial.print(solar_val);
 
   //sht7x data extraction
-  tempSensor.measure(&temperature, &humidity, &dewpoint);
+  tempSensor.measure(&temperature, &humidity, &dewpoint); //time taken in this function is somehow affecting wind sensor data
   Serial.print(";Temp:");
   Serial.print(temperature);
   Serial.print("C; Humidity:");
   Serial.print(humidity); Serial.println("%");
-  delay(1000);
+  //delay(1000);
+    
   Serial.flush();      
 }
 
