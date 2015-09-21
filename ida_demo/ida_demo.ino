@@ -50,14 +50,7 @@ void loop() {
   }
   inputString[127] = '\0';
   delay(1);
-/*      
-  for(uint8_t countOne=0; countOne<wCount; countOne++){
-      //Serial.print(inputString[countOne]);
-  }
-  if(mySerial.overflow()){
-    Serial.println("buffer is overflown!");  
-  }
-*/
+  
   pString = strstr(inputString, "$IIMWV");   
   pTemp   = strstr(inputString, "$WIXDR");
   //Serial.println(*(pString+1));
@@ -71,13 +64,9 @@ void loop() {
     for(wCount=0; wCount<6; wCount++){
       wAngle[wCount] = inputString[(int)(pString-inputString+((char)7))+wCount];
     }
-    for(wCount=0; wCount<6; wCount++){
+    /*for(wCount=0; wCount<6; wCount++){
       wTemp[wCount] = inputString[(int)(pTemp-inputString+((char)9))+wCount];
-    }
-    //for(wCount=0; wCount<5; wCount++){
-     // Serial.print(wTemp[wCount]);    //to print the values from the buffer
-   // }
-   
+    }*/
   }else{
     Serial.println("Token not found");
   }
