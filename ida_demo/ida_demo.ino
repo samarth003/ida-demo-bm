@@ -34,7 +34,7 @@ void loop() {
   //variables for temp-RH sensor
   float temperature;
   float humidity;
-  float dewpoint;
+  //float dewpoint;
 
   while(!mySerial.available()){
     //loop until mySerial is available
@@ -91,8 +91,8 @@ void loop() {
   Serial.print(wData);
   Serial.print(";wind angle:");
   Serial.print(wAngleData);
-  Serial.print(";wind temp:");
-  Serial.print(wTempData);
+  //Serial.print(";wind temp:");
+  //Serial.print(wTempData);
   
   memset(inputString,0,sizeof(inputString)); //clear the character array
   mySerial.flush();
@@ -105,7 +105,8 @@ void loop() {
   Serial.print(solar_val);
 
   //sht7x data extraction
-  tempSensor.measure(&temperature, &humidity, &dewpoint); //time taken in this function is somehow affecting wind sensor data
+  //tempSensor.measure(&temperature, &humidity, &dewpoint); //time taken in this function is somehow affecting wind sensor data
+  tempSensor.measure(&temperature, &humidity);
   Serial.print(";Temp:");
   Serial.print(temperature);
   Serial.print("C; Humidity:");
